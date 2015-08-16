@@ -59,7 +59,8 @@ package Games.GrandFather
 			this.removeChild(this.topCard);
 			this.cardsInFieldPile.pop();
 			if (this.cardsInFieldPile.length == 1) {
-				this.topCard = this.cardsInFieldPile[cardsInFieldPile.length - 1];
+				var lastIndex:int = cardsInFieldPile.length - 1;
+				this.topCard = this.cardsInFieldPile[lastIndex];
 			}
 			if (this.cardsInFieldPile.length == 0) {
 				this.topCard = null;
@@ -67,7 +68,7 @@ package Games.GrandFather
 			return currentTopCard;
 		}
 		
-		public function get FieldPileIndex():int { 						// returns the index of field pile
+		public function get Index():int { 						// returns the index of field pile
 			
 			return this.fieldPileIndex;
 		}
@@ -77,7 +78,7 @@ package Games.GrandFather
 			return this.topCard;
 		}
 		
-		public function get LengthOfCardsInFieldPile():int { 			// returns lenght of the vector with cards
+		public function get CardsCount():int { 			// returns lenght of the vector with cards
 			
 			return this.cardsInFieldPile.length;					
 		}

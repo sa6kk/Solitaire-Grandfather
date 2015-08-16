@@ -11,14 +11,17 @@ package Games.GrandFather
 	{
 		private var sidePileCards:Array = [];
 		private var startValue:int;
-		private var suit:int;
+		private var sign:String;
+		private var topCard:Card = null;
 		private var lengthOfCardsInSidePile:int;
 		
 		private const CARD_WIDTH:int = 65;
 		private const CARD_HEIGHT:int = 100;
 				
-		public function SidePile(startValuePar:int, suitPar:String) 
+		public function SidePile(startValuePar:int, signPar:String) 
 		{
+			this.startValue = startValuePar;
+			this.sign = signPar;
 			drawBorder();
 		}
 		
@@ -34,9 +37,16 @@ package Games.GrandFather
 		}
 		
 		public function pushCard (card:Card):void {
-			//TODO
+			this.addChild(card);
+			card.x = 0;
+			card.y = 0;
+			this.sidePileCards.push(card);
+			this.topCard = card;	
 		}
 		
+		public function get TopCard():Card {
+		return this.topCard;	
+		}
 		
 		public function get Cards():Array {
 			
@@ -48,12 +58,12 @@ package Games.GrandFather
 			return this.startValue;
 		}
 		
-		public function get Suit():int {
+		public function get Sign():String {
 			
-			return this.suit;
+			return this.sign;
 		}
 		
-		public function LengthOfCardsInSidePile():int {
+		public function CardsCount():int {
 			
 			return this.sidePileCards.length;
 		}

@@ -28,7 +28,7 @@ package Games.GrandFather
 		{
 			this.cardSkinPath = cardSkingPathPar;
 			loadInitialComponents();
-			gameEngine = new Engine(this.deck,this.deckPile,this.fieldPiles,this.sidePiles);
+			gameEngine = new Engine(this.deck,this.deckPile,this.fieldPiles,this.sidePiles,this as Sprite);
 		}
 		
 		private function loadInitialComponents():void {
@@ -82,7 +82,8 @@ package Games.GrandFather
 						var sidePile:SidePile = new SidePile(currentValue, currentSuit);
 						this.addChild(sidePile);
 						sidePile.y = StartPointSide.y + (interval+100) * row;
-						sidePile.x = StartPointSide.x + (interval+65) * col;
+						sidePile.x = StartPointSide.x + (interval + 65) * col;
+						this.sidePiles.push(sidePile);
 					}	
 			}
 		}
