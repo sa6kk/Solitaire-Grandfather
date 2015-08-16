@@ -12,7 +12,7 @@ package Games.GrandFather
 	 */
 	public class Deck extends Sprite
 	{
-		private static var deck:Vector = new Vector.<Card>();
+		private var deck:Vector = new Vector.<Card>();
 		private var LeftCard:int;
 		private var ReloadTimesLeft1:int;
 		private var TopCard:Card;
