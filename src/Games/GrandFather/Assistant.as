@@ -23,8 +23,8 @@ package Games.GrandFather
 			}
 		}
 		
-		public static function addEventListenerTo():void {
-			
+		public static function addEventListenerTo(obj:Object,cnst:String,functionToTrigger:Function):void {
+			obj.addEventListener(cnst, functionToTrigger);
 		}
 	}
 
