@@ -29,6 +29,7 @@ package SharedClasses
 			else {
 				this.cardSign = "back";
 			}
+			loadCard();
 		}
 		
 		public function get CardSign():String {

@@ -20,13 +20,15 @@ package Games.GrandFather
 		private const CardWidth:int = 65;
 		private const CardHeight:int = 100;
 		
+		private var gameEngine:Engine;
+		
 		private var cardSkinPath:String;
 		
 		public function Grandfather(cardSkingPathPar:String = "Data/images/Cards/Skin1/0Back.png") 
 		{
 			this.cardSkinPath = cardSkingPathPar;
-			
 			loadInitialComponents();
+			gameEngine = new Engine(this.deck,this.deckPile,this.fieldPiles,this.sidePiles);
 		}
 		
 		private function loadInitialComponents():void {
@@ -59,6 +61,7 @@ package Games.GrandFather
 					pileIndex++;
 					var fieldPile:FieldPile = new FieldPile(pileIndex);
 					this.addChild(fieldPile);
+					fieldPiles.push(fieldPile);
 					fieldPile.x = this.StartPointField.x + col * (interval+CardWidth);
 					fieldPile.y = this.StartPointField.y + row * (interval+CardHeight);
 				}	

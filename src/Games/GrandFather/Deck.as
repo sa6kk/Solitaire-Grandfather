@@ -13,9 +13,8 @@ package Games.GrandFather
 	public class Deck extends Sprite
 	{
 		private var deck:Array = [];
-		private var LeftCard:int;
-		private var ReloadTimesLeft1:int;
-		private var TopCard:Card;
+		private var leftCards:int;
+		private var reloadTimesLeft:int = 1;
 		
 		private var deckSkinPath:String;
 		
@@ -86,11 +85,13 @@ package Games.GrandFather
 			return (Math.floor(Math.random() * ((this.deck.length - 1) - 0 + 1)) + 0);
 		}
 		
-		private function giveTopCard():Card
+		public function giveTopCard():Card
 		{
+			var topCard:Card;
 			var randomNumber:int = RandomNumber();
-			this.TopCard = deck.splice(randomNumber);
-			return this.TopCard;
+			topCard = this.deck[randomNumber];
+			this.deck.splice(randomNumber, 1);
+			return topCard;
 		}
 		
 		public function ReloadDeck(deckPileCards:Array):void

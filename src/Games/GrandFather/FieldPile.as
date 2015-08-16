@@ -37,20 +37,21 @@ package Games.GrandFather
 		private function initIndex (fieldPileIndexPar:int):void {
 			this.fieldPileIndex = fieldPileIndexPar;
 		}
-		public function pushCard (card:Card):void {						//push card in vector
-				if (this.cardsInFieldPile.length == 0) {
-					this.addChild(card);
-					card.x = 0;
-					card.y = 0;
-				}
-				
-				if (this.cardsInFieldPile.length == 1) {
-					this.addChild(card);
-					card.x = 10;
-					card.y = 0;
-				}
-				this.cardsInFieldPile.push(card);
-				this.topCard = card;
+		
+		public function pushCard (card:Card):void {	
+			this.topCard = card;
+			this.addChild(card);
+			
+			if (this.cardsInFieldPile.length == 0) {
+				card.x = 0;
+				card.y = 0;
+			}
+			
+			else if (this.cardsInFieldPile.length == 1) {
+				card.x = 10;
+				card.y = 0;
+			}
+			this.cardsInFieldPile.push(card);
 		}
 		
 		public function giveTopCard():Card {
@@ -70,12 +71,7 @@ package Games.GrandFather
 			
 			return this.fieldPileIndex;
 		}
-		
-		/*public function get Cards():Array { 			 // returns all cards
-			
-			return this.cardsInFieldPile;									
-		}*/
-		
+	
 		public function get TopCard():Card { 							// returns the top Card
 			
 			return this.topCard;
