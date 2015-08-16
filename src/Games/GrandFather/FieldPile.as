@@ -79,8 +79,8 @@ package Games.GrandFather
 		}
 		
 		public function get CardsCount():int { 			// returns lenght of the vector with cards
-			
-			return this.cardsInFieldPile.length;					
+			var cardsInThisFieldPile:int = this.cardsInFieldPile.length;
+			return cardsInThisFieldPile;			
 		}
 		
 	}
