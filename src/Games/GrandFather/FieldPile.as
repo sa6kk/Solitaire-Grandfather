@@ -1,6 +1,7 @@
 package Games.GrandFather 
 {
 	import flash.display.Sprite;
+	import flash.display.Shape;
 	import SharedClasses.Card;
 	/**
 	 * ...
@@ -9,13 +10,28 @@ package Games.GrandFather
 	public class FieldPile extends Sprite
 	{
 		private var fieldPileIndex:int;
-		private var cardsInFieldPile:Vector.<Card>;
+		private var cardsInFieldPile:Array = [];
 		private var topCard:Card;
 		private var lengthOfCardsInFieldPile:int;
 		
+		private const CARD_WIDTH:int = 65;
+		private const CARD_HEIGHT:int = 100;
+		
 		public function FieldPile(fieldPileIndexPar:int) 
 		{
+			drawBorder();
 			initIndex (fieldPileIndexPar);
+		}
+		
+		private function drawBorder():void {
+			var line:Shape = new Shape();
+			line.graphics.lineStyle(1, 0x0);
+			line.graphics.moveTo(0, 0);
+			line.graphics.lineTo(CARD_WIDTH, 0);
+			line.graphics.lineTo(CARD_WIDTH, CARD_HEIGHT);
+			line.graphics.lineTo(0, CARD_HEIGHT);
+			line.graphics.lineTo(0, 0);
+			this.addChild(line);
 		}
 		
 		private function initIndex (fieldPileIndexPar:int):void {
@@ -55,10 +71,10 @@ package Games.GrandFather
 			return this.fieldPileIndex;
 		}
 		
-		public function get Cards():Vector.<Card> { 			 // returns all cards
+		/*public function get Cards():Array { 			 // returns all cards
 			
 			return this.cardsInFieldPile;									
-		}
+		}*/
 		
 		public function get TopCard():Card { 							// returns the top Card
 			

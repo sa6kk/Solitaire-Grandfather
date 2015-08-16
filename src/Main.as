@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import Games.GrandFather.Grandfather;
 	
 	/**
 	 * ...
@@ -11,7 +12,8 @@ package
 		
 		public function Main() 
 		{
-			
+			var grandfatherSolitaire:Grandfather = new Grandfather();
+			this.addChild(grandfatherSolitaire);
 		}
 		
 	}

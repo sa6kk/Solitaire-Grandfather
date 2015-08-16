@@ -12,14 +12,73 @@ package Games.GrandFather
 	 */
 	public class Deck extends Sprite
 	{
-		private var deck:Vector = new Vector.<Card>();
+		private var deck:Array = [];
 		private var LeftCard:int;
 		private var ReloadTimesLeft1:int;
 		private var TopCard:Card;
 		
-		public function Deck()
+		private var deckSkinPath:String;
+		
+		public function Deck(deckSkinPathPar:String)
 		{
-			fillContainerWithImg(this , "", 50, 100);
+			this.deckSkinPath = deckSkinPathPar;
+			fillContainerWithImg(this , "/Data/images/Cards/Skin1/0Back.png", 65, 100);
+			loadDeck();
+			loadDeck();
+		}
+		
+		private function loadDeck():void
+		{
+			var cardUrl:String;
+			var cardNumbers:int = 14;
+			var cardColors:int = 4
+			
+			for (var i:int = 0; i < cardNumbers; i++)
+			{
+				if (i == 0)
+				{ //pass back card
+					continue;
+				}
+				
+				for (var j:int = 0; j < cardColors; j++)
+				{
+					var cardColor:String;
+					
+					if (i == 0)
+					{
+						cardColor = "Back";
+						cardUrl = i + cardColor;
+						
+						//var card:Card = new Card(cardUrl, i);
+						this.deck.push(card);
+						
+						break;
+					}
+					else
+					{
+						switch (j)
+						{
+						case 0: 
+							cardColor = "C";
+							break;
+						case 1: 
+							cardColor = "D";
+							break;
+						case 2: 
+							cardColor = "H";
+							break;
+						case 3: 
+							cardColor = "S";
+							break;
+						}
+					}
+					
+					cardUrl = i + cardColor;
+					
+					var card:Card = new Card(cardUrl, i);
+					this.deck.push(card);
+				}
+			}
 		}
 		
 		public function RandomNumber():int
@@ -34,9 +93,9 @@ package Games.GrandFather
 			return this.TopCard;
 		}
 		
-		public function ReloadDeck(deckPileCards:Vector):void
+		public function ReloadDeck(deckPileCards:Array):void
 		{
-		
+		//TODO
 		}
 		
 		private function fillContainerWithImg(container:Sprite, path:String, imgWidth:int, imgHeight:int):void
