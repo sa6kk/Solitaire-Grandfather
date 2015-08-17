@@ -26,6 +26,8 @@ package Games.GrandFather
 		
 		private var isThereEmpties:Boolean = true;//is field var for use object as reference
 		
+		private var rules:Rules = new Rules();
+		
 		public function Engine(deckPar:Deck, deckPilePar:DeckPile, fieldPilesPar:Array, sidePilesPar:Array, generalContainerPar:Sprite,buttonRulesPar:GameButton)
 		{
 			this.deck = deckPar;
@@ -81,7 +83,7 @@ package Games.GrandFather
 			makeDeckInteractive();
 			makeDeckPileInteractive();
 			makeInteractiveFieldPiles();
-			//makeButtonRulesInteractive();
+			makeButtonRulesInteractive();
 		}
 		
 		/// BUTTONS INTERACTION - > DOESN WORK CLASS RULES
@@ -91,14 +93,15 @@ package Games.GrandFather
 		
 		private function showHideRules(e:MouseEvent):void {
 			if (this.isRulesHidden) {
-				//var rules:Rules = new Rules();
-				//this.generalContainer.addChild(rules);
-				//this.isRulesHidden = false;
+				//todo: MOTION Rules is Appear
+				this.generalContainer.addChild(rules);
+				this.isRulesHidden = false;
 			}
-			else {
-				//this.generalContainer.removeChild(rules);
-				//rules = null;
-				//this.isRulesHidden = true;
+			
+			else 
+			{
+				this.generalContainer.removeChild(rules);
+				this.isRulesHidden = true;
 			}
 		}
 		

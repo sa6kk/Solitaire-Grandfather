@@ -2,6 +2,8 @@ package Games.GrandFather
 {
 	import SharedClasses.Card;
 	import flash.events.*
+	import flash.display.*;
+	import flash.net.URLRequest;
 	
 	/**
 	 * ...
@@ -40,6 +42,27 @@ package Games.GrandFather
 				}
 			}
 			return win;
+		}
+		
+		public static function fillContainerWithImg(container:Sprite, path:String, imgWidth:int, imgHeight:int):void
+		{			
+			var img:Loader = new Loader();
+			img.load(new URLRequest(path));
+			img.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void
+			{
+				onLoaderComplete(container, img, imgWidth, imgHeight)
+			});
+		}
+		
+		private static function onLoaderComplete(container:Sprite, img:Loader, imgWidth:int, imgHeight:int):void
+		{
+			var bmp:Bitmap = new Bitmap();
+			bmp = img.content as Bitmap;
+			bmp.width = imgWidth;
+			bmp.height = imgHeight;
+			container.addChildAt(bmp, 0);
+			bmp.x = 0;
+			bmp.y = 0;
 		}
 	}
 
