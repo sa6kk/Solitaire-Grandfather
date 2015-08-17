@@ -1,6 +1,7 @@
 package
 {
 	import flash.display.Sprite;
+	import Games.GrandFather.GameButton;
 	import Games.GrandFather.Grandfather;
 	
 	/**

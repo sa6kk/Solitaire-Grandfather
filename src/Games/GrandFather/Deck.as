@@ -13,7 +13,7 @@ package Games.GrandFather
 	public class Deck extends Sprite
 	{
 		private var deck:Array = [];
-		private var leftCards:int;
+		private var cardsCount:int;
 		private var reloadTimesLeft:int = 1;
 		
 		private var deckSkinPath:String;
@@ -48,7 +48,6 @@ package Games.GrandFather
 						cardColor = "Back";
 						cardUrl = i + cardColor;
 						
-						//var card:Card = new Card(cardUrl, i);
 						this.deck.push(card);
 						
 						break;
@@ -96,7 +95,12 @@ package Games.GrandFather
 		
 		public function ReloadDeck(deckPileCards:Array):void
 		{
-		//TODO
+			var deckPileTopCard:Card;
+			while(deckPileCards.length>0){
+				deckPileTopCard = deckPileCards.pop();
+				this.deck.push(deckPileTopCard);
+			}
+			this.reloadTimesLeft--;
 		}
 		
 		private function fillContainerWithImg(container:Sprite, path:String, imgWidth:int, imgHeight:int):void
@@ -119,7 +123,14 @@ package Games.GrandFather
 			bmp.x = 0;
 			bmp.y = 0;
 		}
-	
+		
+		public function get CardsCount():int {
+			return this.deck.length;	
+		}
+		
+		public function get ReloadedTimesLeft():int {
+			return this.reloadTimesLeft;	
+		}
 	}
 
 }

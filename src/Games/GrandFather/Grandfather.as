@@ -24,11 +24,14 @@ package Games.GrandFather
 		
 		private var cardSkinPath:String;
 		
+		private var buttonRules:GameButton;
+		private var buttonScore:GameButton;
+		
 		public function Grandfather(cardSkingPathPar:String = "Data/images/Cards/Skin1/0Back.png") 
 		{
 			this.cardSkinPath = cardSkingPathPar;
 			loadInitialComponents();
-			gameEngine = new Engine(this.deck,this.deckPile,this.fieldPiles,this.sidePiles,this as Sprite);
+			gameEngine = new Engine(this.deck,this.deckPile,this.fieldPiles,this.sidePiles,this as Sprite,this.buttonRules);
 		}
 		
 		private function loadInitialComponents():void {
@@ -36,6 +39,16 @@ package Games.GrandFather
 			loadDeckPile();
 			loadFieldPiles();
 			loadSidePiles();
+			loadGameButtons();
+		}
+		
+		private function loadGameButtons():void {
+			this.buttonRules = new GameButton("How to play...");
+			
+			this.addChild(this.buttonRules);
+			
+			this.buttonRules.x = 0;
+			this.buttonRules.y = 600 - this.buttonRules.height
 		}
 		
 		private function loadDeck():void {

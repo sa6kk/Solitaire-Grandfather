@@ -21,19 +21,23 @@ package Games.GrandFather
 		private var takenCardFieldPile:FieldPile;
 		private var takenCardDeckPile:DeckPile;
 		
-		private var isThereEmpties:Boolean = true;//for use object as reference
+		private var buttonRules:GameButton;
+		private var isRulesHidden:Boolean= true;
 		
-		public function Engine(deckPar:Deck, deckPilePar:DeckPile, fieldPilesPar:Array, sidePilesPar:Array, generalContainerPar:Sprite)
+		private var isThereEmpties:Boolean = true;//is field var for use object as reference
+		
+		public function Engine(deckPar:Deck, deckPilePar:DeckPile, fieldPilesPar:Array, sidePilesPar:Array, generalContainerPar:Sprite,buttonRulesPar:GameButton)
 		{
 			this.deck = deckPar;
 			this.deckPile = deckPilePar;
 			this.fieldPiles = fieldPilesPar;
 			this.sidePiles = sidePilesPar;
 			this.generalContainer = generalContainerPar;
+			this.buttonRules = buttonRulesPar;
 			dealing();
 			makeInteraction();
 		}
-		
+		//INITIAL DEALING
 		private function dealing():void {
 			Assistant.dealing(this.deck, this.fieldPiles);
 
@@ -71,16 +75,35 @@ package Games.GrandFather
 				}
 			}
 		}
-		
+		///////////////////////////INTERACTION//////////////////////////
 		private function makeInteraction():void
 		{
 			makeDeckInteractive();
 			makeDeckPileInteractive();
 			makeInteractiveFieldPiles();
+			//makeButtonRulesInteractive();
 		}
 		
+		/// BUTTONS INTERACTION - > DOESN WORK CLASS RULES
+		private function makeButtonRulesInteractive():void {
+			Assistant.addEventListenerTo(this.buttonRules, MouseEvent.CLICK, showHideRules);
+		}
+		
+		private function showHideRules(e:MouseEvent):void {
+			if (this.isRulesHidden) {
+				//var rules:Rules = new Rules();
+				//this.generalContainer.addChild(rules);
+				//this.isRulesHidden = false;
+			}
+			else {
+				//this.generalContainer.removeChild(rules);
+				//rules = null;
+				//this.isRulesHidden = true;
+			}
+		}
+		
+		
 		// DECK PILE INTERACTIVE
-
 		private function makeDeckPileInteractive():void {
 			Assistant.addEventListenerTo(this.deckPile, MouseEvent.MOUSE_DOWN, dragTopCardFromDeckPile);
 		}
@@ -114,6 +137,8 @@ package Games.GrandFather
 				}
 			}
 			
+			
+			
 			if (!isAllowed)
 			{
 				returnTakenCardToDeckPile();
@@ -128,7 +153,7 @@ package Games.GrandFather
 		}
 
 
-		// DECK INTERACTIVE/////////////////////////////////////////////////
+		// DECK INTERACTIVE
 		private function makeDeckInteractive():void
 		{
 			Assistant.addEventListenerTo(this.deck, MouseEvent.CLICK, putCardOnDeckPile);
@@ -140,23 +165,15 @@ package Games.GrandFather
 			var deckTopCard:Card = deck.giveTopCard();
 			this.deckPile.pushCard(deckTopCard);
 			autoFillEmptyFieldPiles();
-		}
-		
-		private function autoFillEmptyFieldPiles():void {
-			for (var fieldPileIndex:int = 0; fieldPileIndex < fieldPiles.length; fieldPileIndex++) {
-				var currentFieldPile:FieldPile = fieldPiles[fieldPileIndex];
-				if (currentFieldPile.TopCard == null) {
-					if (this.deckPile.TopCard == null) {
-						this.takenCard = deck.giveTopCard();
-					}
-					if (this.deckPile.TopCard != null) {
-						this.takenCard = deckPile.giveTopCard();
-					}
-					currentFieldPile.pushCard(this.takenCard);
-					//todo: motion from deck pile to currentFieldPile
-					break;
+			if (deck.CardsCount == 0) {
+				if(deck.ReloadedTimesLeft ==  0){
+					Assistant.removeEventListenerTo(this.deck, MouseEvent.CLICK, putCardOnDeckPile);
+					this.generalContainer.removeChild(this.deck);
 				}
-			}	
+				if (deck.ReloadedTimesLeft == 1) {
+					this.deck.ReloadDeck(this.deckPile.Cards);
+				}
+			}
 		}
 		
 		// FIELD PILES INTERACTIVE
@@ -188,7 +205,7 @@ package Games.GrandFather
 			takenCard.stopDrag();
 			var isAllowed:Boolean = false;
 			
-			for (var sidePileIndex:int = 0; sidePileIndex < sidePiles.length; sidePileIndex++)
+			for (var sidePileIndex:int = 0; sidePileIndex < this.sidePiles.length; sidePileIndex++)
 			{
 				var currentSidePile:SidePile = sidePiles[sidePileIndex];
 				if (this.takenCard.hitTestObject(currentSidePile))
@@ -224,8 +241,8 @@ package Games.GrandFather
 						break;
 					}
 				}
-				Assistant.removeEventListenerTo(takenCard, MouseEvent.MOUSE_UP, dropTakenCardFromFieldPile);
 			}
+			Assistant.removeEventListenerTo(this.takenCard, MouseEvent.MOUSE_UP, dropTakenCardFromFieldPile);
 			if (!isAllowed)
 			{
 				returnTakenCardToFieldPile();
@@ -244,6 +261,25 @@ package Games.GrandFather
 			this.takenCard.parent.removeChild(this.takenCard);
 			this.takenCardFieldPile.pushCard(this.takenCard);
 		}
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////
+		private function autoFillEmptyFieldPiles():void {
+			for (var fieldPileIndex:int = 0; fieldPileIndex < fieldPiles.length; fieldPileIndex++) {
+				var currentFieldPile:FieldPile = fieldPiles[fieldPileIndex];
+				if (currentFieldPile.TopCard == null) {
+					if (this.deckPile.TopCard == null) {
+						this.takenCard = deck.giveTopCard();
+					}
+					if (this.deckPile.TopCard != null) {
+						this.takenCard = deckPile.giveTopCard();
+					}
+					currentFieldPile.pushCard(this.takenCard);
+					//todo: motion from deck pile to currentFieldPile
+					break;
+				}
+			}	
+		}
+		
 	}
 
 }
