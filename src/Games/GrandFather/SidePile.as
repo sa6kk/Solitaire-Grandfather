@@ -2,6 +2,10 @@ package Games.GrandFather
 {
 	import flash.display.Sprite;
 	import flash.display.Shape;
+	import flash.display.Loader;
+	import flash.display.Bitmap;
+	import flash.net.URLRequest;
+	import flash.events.Event;
 	import SharedClasses.Card;
 	/**
 	 * ...
@@ -23,6 +27,16 @@ package Games.GrandFather
 			this.startValue = startValuePar;
 			this.sign = signPar;
 			drawBorder();
+			drawSign();
+		}
+		
+		private function drawSign():void {
+			var signContainer:Sprite = new Sprite();
+			var path:String = "Data/images/Suit/" + this.sign + ".png";
+			fillContainerWithImg(signContainer, path, 20, 20);
+			this.addChild(signContainer);
+			signContainer.x = 23;//in the middle
+			signContainer.y = 35 ;
 		}
 		
 		private function drawBorder():void {
@@ -44,8 +58,28 @@ package Games.GrandFather
 			this.topCard = card;	
 		}
 		
+		
+		private function fillContainerWithImg(container:Sprite, path:String, imgWidth:int, imgHeight:int):void
+		{
+			var img:Loader = new Loader();
+			img.load(new URLRequest(path));
+			img.contentLoaderInfo.addEventListener(Event.COMPLETE, function():void
+			{
+				onLoaderComplete(container, img, imgWidth, imgHeight)
+			});
+		}
+		
+		private function onLoaderComplete(container:Sprite, img:Loader, imgWidth:int, imgHeight:int):void
+		{
+			var bmp:Bitmap = new Bitmap();
+			bmp = img.content as Bitmap;
+			bmp.width = imgWidth;
+			bmp.height = imgHeight;
+			container.addChildAt(bmp, 0);
+		}
+		
 		public function get TopCard():Card {
-		return this.topCard;	
+			return this.topCard;	
 		}
 		
 		public function get Cards():Array {
@@ -63,7 +97,7 @@ package Games.GrandFather
 			return this.sign;
 		}
 		
-		public function CardsCount():int {
+		public function get CardsCount():int {
 			
 			return this.sidePileCards.length;
 		}

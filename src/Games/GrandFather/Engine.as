@@ -146,7 +146,12 @@ package Games.GrandFather
 			for (var fieldPileIndex:int = 0; fieldPileIndex < fieldPiles.length; fieldPileIndex++) {
 				var currentFieldPile:FieldPile = fieldPiles[fieldPileIndex];
 				if (currentFieldPile.TopCard == null) {
-					this.takenCard = deckPile.giveTopCard();
+					if (this.deckPile.TopCard == null) {
+						this.takenCard = deck.giveTopCard();
+					}
+					if (this.deckPile.TopCard != null) {
+						this.takenCard = deckPile.giveTopCard();
+					}
 					currentFieldPile.pushCard(this.takenCard);
 					//todo: motion from deck pile to currentFieldPile
 					break;
@@ -221,10 +226,16 @@ package Games.GrandFather
 				}
 				Assistant.removeEventListenerTo(takenCard, MouseEvent.MOUSE_UP, dropTakenCardFromFieldPile);
 			}
-			
 			if (!isAllowed)
 			{
 				returnTakenCardToFieldPile();
+			}
+			else 
+			{
+				autoFillEmptyFieldPiles();	
+			}
+			if (Assistant.isThereWin(this.sidePiles)) {// if there is win -> game over
+				//Assistant.gameOver();	
 			}
 		}
 		

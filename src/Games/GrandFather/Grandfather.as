@@ -42,14 +42,14 @@ package Games.GrandFather
 			this.deck = new Deck(this.cardSkinPath);
 			this.addChild(this.deck);
 			this.deck.x = 20;
-			this.deck.y = 20;
+			this.deck.y = 140;
 		}
 		
 		private function loadDeckPile():void {
 			this.deckPile = new DeckPile();
 			this.addChild(this.deckPile);
 			this.deckPile.x = 20;
-			this.deckPile.y = 140;
+			this.deckPile.y = 260;
 		}
 		
 		private function loadFieldPiles():void {

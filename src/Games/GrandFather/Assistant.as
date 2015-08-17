@@ -30,6 +30,17 @@ package Games.GrandFather
 		public static function removeEventListenerTo(obj:Object,eventConst:String,functionToTrigger:Function):void {
 			obj.removeEventListener(eventConst, functionToTrigger);
 		}
+		
+		public static function isThereWin(sidePiles:Array):Boolean {
+			var win:Boolean = false;
+			for (var sidePileIndex:int = 0; sidePileIndex < sidePiles.length; sidePileIndex++) {
+				var currentSidePile:SidePile = sidePiles[sidePileIndex];
+				if (currentSidePile.CardsCount == 13) {
+					win = true;
+				}
+			}
+			return win;
+		}
 	}
 
 }

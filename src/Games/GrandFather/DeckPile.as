@@ -52,6 +52,10 @@ package Games.GrandFather
 			}
 			return currentTopCard;
 		}
+		
+		public function get TopCard():Card {
+		return this.topCard;	
+		}
 	}
 
 }
