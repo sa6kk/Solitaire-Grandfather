@@ -15,13 +15,6 @@ package
 		{
 			var grandfatherSolitaire:Grandfather = new Grandfather();
 			this.addChild(grandfatherSolitaire);
-			
-			var gradient:GameButton = new GameButton('PLAY');
-			addChild(gradient);
-			
-			var gradient2:GameButton = new GameButton('NEW GAME');
-			addChild(gradient2);
-			gradient2.y = 200;
 		}
 		
 	}

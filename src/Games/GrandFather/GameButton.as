@@ -16,10 +16,12 @@ package Games.GrandFather
 		
 		public function GameButton(buttonTextPar:String) 
 		{
+			this.buttonText = buttonTextPar;
+			
 			var type:String = GradientType.RADIAL; 
 			var colors:Array = [0xF2290D, 0x000000]; 
-			var alphas:Array = [0.8, 0.8]; 
-			var ratios:Array = [50, 250]; 						// цвета на елипсата в средата е по наситена
+			var alphas:Array = [1, 1]; 
+			var ratios:Array = [100, 250]; 						// цвета на елипсата в средата е по наситена
 			var spreadMethod:String = SpreadMethod.PAD; 
 			var interp:String = InterpolationMethod.RGB; 
 			var focalPtRatio:Number = 0;
@@ -28,32 +30,22 @@ package Games.GrandFather
 			var boxHeight:Number = 100; 
 			var boxRotation:Number = Math.PI/2; // 90° 
 			var tx:Number = 0; 								// от къде да започва червената елипса по Х
-			var ty:Number = 0; 
+			var ty:Number = -20; 
+			
 			matrix.createGradientBox(boxWidth, boxHeight, boxRotation, tx, ty);; 
 			this.graphics.beginGradientFill(type,colors,alphas,ratios, matrix, spreadMethod, interp, focalPtRatio);
 			this.graphics.drawRoundRect(0,0,200,35,20,20)
 			
-			this.buttonText = buttonTextPar;			
 			var buttonTxtFiled:TextField = new TextField();
-			buttonTxtFiled.text = this.buttonText;			
-			
-			var levelOnetxtFormat:TextFormat = new TextFormat();
-			buttonTxtFiled.setTextFormat(levelOnetxtFormat);
-			buttonTxtFiled.defaultTextFormat = new TextFormat('Comic Sans MS', 20, 0xFF0000, 'bold');
+			buttonTxtFiled.defaultTextFormat = new TextFormat('Comic Sans MS', 20,0x80FF00, 'bold');
 			buttonTxtFiled.text = this.buttonText;
 			this.addChild(buttonTxtFiled);
-			buttonTxtFiled.x = this.x + (this.width / 2) -( buttonTxtFiled.width / 2);
-			buttonTxtFiled.y = 0;
-			//levelOneTxt.autoSize = TextFieldAutoSize.LEFT;
-			buttonTxtFiled.mouseEnabled = false;
-			buttonTxtFiled.selectable = false;
-			buttonTxtFiled.textColor = 0X000000;
+			buttonTxtFiled.x = this.x + (this.width / 2) - (buttonTxtFiled.textWidth / 2);
+			buttonTxtFiled.mouseEnabled = true;
+			buttonTxtFiled.selectable = true;			
 			buttonTxtFiled.height = 50;
 			buttonTxtFiled.width = 200;
-			buttonTxtFiled.border = false;
-			buttonTxtFiled.borderColor = 0X000000;			
-			buttonTxtFiled.background = false;
-			buttonTxtFiled.backgroundColor = 0X0000CC;
+			
 			
 			
 		}
