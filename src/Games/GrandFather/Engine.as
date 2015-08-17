@@ -21,6 +21,8 @@ package Games.GrandFather
 		private var takenCardFieldPile:FieldPile;
 		private var takenCardDeckPile:DeckPile;
 		
+		private var isThereEmpties:Boolean = true;//for use object as reference
+		
 		public function Engine(deckPar:Deck, deckPilePar:DeckPile, fieldPilesPar:Array, sidePilesPar:Array, generalContainerPar:Sprite)
 		{
 			this.deck = deckPar;
@@ -28,8 +30,46 @@ package Games.GrandFather
 			this.fieldPiles = fieldPilesPar;
 			this.sidePiles = sidePilesPar;
 			this.generalContainer = generalContainerPar;
-			Assistant.dealing(this.deck, this.fieldPiles);
+			dealing();
 			makeInteraction();
+		}
+		
+		private function dealing():void {
+			Assistant.dealing(this.deck, this.fieldPiles);
+
+			while (isThereEmpties) {
+				this.isThereEmpties = false;
+				autoFillSidePilesCorrectOnDealing();
+				autoFillEmptyFieldPilesOnDealing();
+			}
+		}
+		
+		private function autoFillEmptyFieldPilesOnDealing():void {
+			for (var fieldPileIndex:int = 0; fieldPileIndex < fieldPiles.length; fieldPileIndex++) {
+				var currentFieldPile:FieldPile = fieldPiles[fieldPileIndex];
+				if (currentFieldPile.TopCard == null) {
+					this.takenCard = deck.giveTopCard();
+					currentFieldPile.pushCard(this.takenCard);
+					this.isThereEmpties = true;
+				}
+			}
+		}
+		
+		private function autoFillSidePilesCorrectOnDealing():void {
+			for (var fieldPileIndex:int = 0; fieldPileIndex < fieldPiles.length; fieldPileIndex++) {
+				var currentFieldPile:FieldPile = fieldPiles[fieldPileIndex];
+				if (currentFieldPile.TopCard.CardValue == 1 || currentFieldPile.TopCard.CardValue == 13) {
+					this.takenCard = currentFieldPile.giveTopCard();
+					for (var sidePileIndex:int = 0; sidePileIndex < sidePiles.length; sidePileIndex++) {
+						var currentSidePile:SidePile = sidePiles[sidePileIndex];
+						if (currentSidePile.Sign == this.takenCard.CardSign && currentSidePile.StartValue == this.takenCard.CardValue) {
+							//todo: motion from field pile to currentSidePile
+							currentSidePile.pushCard(this.takenCard);
+							this.isThereEmpties = true;
+						}
+					}
+				}
+			}
 		}
 		
 		private function makeInteraction():void
@@ -63,7 +103,8 @@ package Games.GrandFather
 			
 			for (var fieldPileIndex:int = 0; fieldPileIndex < this.fieldPiles.length; fieldPileIndex++) {
 				var currentFieldPile:FieldPile = fieldPiles[fieldPileIndex];
-				if (this.takenCard.hitTestObject(currentFieldPile)) {
+				//if (this.takenCard.hitTestObject(currentFieldPile)) {// this.takenCard goes to first field pile thath hit
+				if (currentFieldPile.hitTestPoint(this.generalContainer.mouseX, this.generalContainer.mouseY)) {
 					if (currentFieldPile.CardsCount == 1) {
 						isAllowed = true;
 						this.generalContainer.removeChild(this.takenCard);
@@ -95,19 +136,19 @@ package Games.GrandFather
 		
 		private function putCardOnDeckPile(e:MouseEvent):void
 		{
-			//todo: tween from deck to deck pile
+			//todo: motion from deck to deck pile
 			var deckTopCard:Card = deck.giveTopCard();
 			this.deckPile.pushCard(deckTopCard);
-			//check if there is empty field piles
-			fillEmptyFieldPiles();
+			autoFillEmptyFieldPiles();
 		}
 		
-		private function fillEmptyFieldPiles():void {
+		private function autoFillEmptyFieldPiles():void {
 			for (var fieldPileIndex:int = 0; fieldPileIndex < fieldPiles.length; fieldPileIndex++) {
 				var currentFieldPile:FieldPile = fieldPiles[fieldPileIndex];
 				if (currentFieldPile.TopCard == null) {
 					this.takenCard = deckPile.giveTopCard();
 					currentFieldPile.pushCard(this.takenCard);
+					//todo: motion from deck pile to currentFieldPile
 					break;
 				}
 			}	
