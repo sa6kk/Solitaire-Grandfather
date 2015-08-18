@@ -27,11 +27,14 @@ package Games.GrandFather
 		private var buttonRules:GameButton;
 		private var buttonScore:GameButton;
 		
+		private var isWin:Boolean = false;
+		private var isGameRunning:Boolean = true;
+		
 		public function Grandfather(cardSkingPathPar:String = "Data/images/Cards/Skin1/0Back.png") 
 		{
 			this.cardSkinPath = cardSkingPathPar;
 			loadInitialComponents();
-			gameEngine = new Engine(this.deck,this.deckPile,this.fieldPiles,this.sidePiles,this as Sprite,this.buttonRules);
+			gameEngine = new Engine(this.deck,this.deckPile,this.fieldPiles,this.sidePiles,this as Sprite,this.IsGameRunning,this.isWin,this.buttonRules);
 		}
 		
 		private function loadInitialComponents():void {
@@ -99,6 +102,14 @@ package Games.GrandFather
 						this.sidePiles.push(sidePile);
 					}	
 			}
+		}
+		
+		public function get IsWin():Boolean {
+			return this.isWin;	
+		}
+		
+		public function get IsGameRunning():Boolean {
+			return this.isGameRunning;	
 		}
 	}
 

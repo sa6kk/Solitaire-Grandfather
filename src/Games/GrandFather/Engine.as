@@ -28,13 +28,18 @@ package Games.GrandFather
 		
 		private var rules:Rules = new Rules();
 		
-		public function Engine(deckPar:Deck, deckPilePar:DeckPile, fieldPilesPar:Array, sidePilesPar:Array, generalContainerPar:Sprite,buttonRulesPar:GameButton)
+		private var isGameRunning:Boolean;
+		private var isWin:Boolean;
+		
+		public function Engine(deckPar:Deck, deckPilePar:DeckPile, fieldPilesPar:Array, sidePilesPar:Array, generalContainerPar:Sprite,isGameRunningPar:Boolean,isWinPar:Boolean,buttonRulesPar:GameButton)
 		{
 			this.deck = deckPar;
 			this.deckPile = deckPilePar;
 			this.fieldPiles = fieldPilesPar;
 			this.sidePiles = sidePilesPar;
 			this.generalContainer = generalContainerPar;
+			this.isGameRunning = isGameRunningPar;
+			this.isWin = isWinPar;
 			this.buttonRules = buttonRulesPar;
 			dealing();
 			makeInteraction();
@@ -93,7 +98,7 @@ package Games.GrandFather
 		
 		private function showHideRules(e:MouseEvent):void {
 			if (this.isRulesHidden) {
-				//todo: MOTION Rules is Appear
+				//todo: MOTION Rules are Appear
 				this.generalContainer.addChild(rules);
 				this.isRulesHidden = false;
 			}
@@ -254,8 +259,9 @@ package Games.GrandFather
 			{
 				autoFillEmptyFieldPiles();	
 			}
-			if (Assistant.isThereWin(this.sidePiles)) {// if there is win -> game over
-				//Assistant.gameOver();	
+			if (Assistant.isThereWin(this.sidePiles)) {
+				this.isGameRunning = false;
+				this.isWin = true;
 			}
 		}
 		
